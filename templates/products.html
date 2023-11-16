@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block style %}
+  <style>
+      .btn-danger {
+        float: right;
+      }
+
+  </style>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h4>Your Url's Platform. <a href="#">Upgrade now</a></h4>
+        </div>
+    </div>
+    {% for u in urls %}
+        <div class="row justify-content-between container shadow p-1">
+            <div class="col-10 col-sm-10 col-md-6 mb-2 ">
+
+                <div style="overflow: hidden;" class="customcontainer p-2">
+
+                    <p style="text-overflow: ellipsis;">Original : <a href="{{ u.original_url }}" target="_blank"
+                            class="card-link">{{ u.original_url }}</a>
+                    </p>
+
+                    <p>Shorten : <a href="http://localhost:8000/{{ u.short_query }}" target="_blank"
+                            class="card-link">http://localhost:8000/{{ u.short_query }}</a></p>
+                    <div class="row justify-content-between">
+                        <div class="col-6 col-sm-6 ">
+                            <h3>Visits : {{ u.visits }} </h3>
+                        </div>
+                        <div class="col-4">
+                            <form action="{% url 'deleteurl' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="delete" value="{{ u.short_query }}">
+                                <input type="submit" class="btn btn-danger" value="Delete">
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,268 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   <h1 class="text-center">Lynkly</h1>
+   <h3 class="text-center" style="font-weight: 100; margin-bottom: 40px;">Create short links. Share them anywhere.</h3>
+
+   <div class="container container-box  shadow p-4">
+      <div class="row">
+          <div class="col-12 text-center py-2">
+              <h3>Shorten A Url</h3>
+          </div>
+          <div class="col-10 col-sm-10 col-md-6 mx-auto">
+
+              {% if messages %}
+              {% for msg in messages %}
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  {{ msg }}
+
+                  <button type="button" class="close" data-dismiss="alert" area-label="Close">
+                      <span area-hidden-true>&times;</span>
+                  </button>
+              </div>
+              {% endfor %}
+              {% endif %}
+
+              <form action="{% url 'generate' %}" method="POST">
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <input type="url" name="original" class="form-control" placeholder="Paste a long Url: http://super-long-link.com/shorten-it">
+                  </div>
+                  <div class="form-group">
+                      <div class="input-group-prepend">
+                          <div class="input-group-text">http://lynk.ly/</div>
+                          <input type="text" name="short" class="form-control" placeholder="Custom Url (6 chars)"
+                              maxlength="6" id="short">
+
+                      </div>
+                      <p id="shorthelp" class="form-text text-muted"><em>Leave It Blank To generate randomly</em></p>
+                  </div>
+                  <div class="form-group col-12 text-center py-2">
+                      <input type="submit" class="btn btn-primary px-4" value="Generate">
+                  </div>
+              </form>
+          </div>
+      </div>
+   </div>
+
+
+<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="text-center">
+        <h3>What lynkly customers are saying</h3>
+    </div>
+    
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="3000">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>*****</h5>
+                <p class="p-text"><strong>lynkly is user-friendly and accessible. It's is the one-stop-shop for all link-associated things.</strong></p>
+            </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="2000">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>****</h5>
+                <p class="p-text"><strong>The more I use lynkly, the more valuable it becomes to me. It cuts my time down because it saves all my information, and it gives me insight into which links are most popular and have the most clicks.</strong></p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>*****</h5>
+                <p class="p-text"><strong>lynkly has enabled us to build trust with clients by giving them branded short links that carry the
+                    main message of the link and that carries our brand.</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <div class="carousel-control-arrows">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+
+
+<div class="accordion accordion-flush container" id="accordion">
+    <div class="text-center">
+        <h3>Frequently asked questions</h3>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-headingOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            What is a URL shortener?
+        </button>
+      </h2>
+      <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">A URL shortener, also known as a link shortener, seems like a simple tool, but it is a service that can have a dramatic impact on your marketing efforts.
+
+            Link shorteners work by transforming any long URL into a shorter, more readable link. When a user clicks the shortened version, they’re automatically forwarded to the destination URL.
+            
+            Think of a short URL as a more descriptive and memorable nickname for your long webpage address. You can, for example, use a short URL like lynkly.ly/Celebratelynkly so people will have a good idea about where your link will lead before they click it.
+            
+            If you’re contributing content to the online world, you need a URL shortener.
+            
+            Make your URLs stand out with our easy to use free link shortener above.</div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+            Benefits of a short URL
+        </button>
+      </h2>
+      <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">How many people can even remember a long web address, especially if it has tons of characters and symbols? A short URL can make your link more memorable. Not only does it allow people to easily recall and share your link with others, it can also dramatically improve traffic to your content.
+
+            On a more practical side, a short URL is also easier to incorporate into your collateral – whether you’re looking to engage with your customers offline or online.
+            
+            Bitly is the best URL shortener for everyone, from influencers to small brands to large enterprises, who are looking for a simple way to create, track and manage their links.</div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+          Why choose lynkly?
+        </button>
+      </h2>
+      <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">Whether you’re sharing one link or scan or millions, our platform was built to help you make every point of connection between your content and your audience ignite action.
+
+            It’s why the most recognized brands in the world love our platform.</div>
+      </div>
+    </div>
+  </div>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container text-center">
+      <h1 class="display-4">More than a free link shortener</h1>
+      <a href="{% url 'pricing' %}"><input type="button" class="btn btn-primary px-4" value="Get Started"></a>
+    </div>
+</div>
+
+<div class="container">
+    <footer class="py-5">
+      <div class="row">
+        <div class="col-6 col-md-2 mb-3">
+          <h5>Solutions</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Social Media</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Digital Marketing</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Customer Service</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">For Developers</a></li>
+          </ul>
+        </div>
+  
+        <div class="col-6 col-md-2 mb-3">
+          <h5>Features</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Branded Links</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Mobile Links</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Campaign</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Management & Analytics</a></li>
+          </ul>
+        </div>
+  
+        <div class="col-6 col-md-2 mb-3">
+          <h5>Legal</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Privacy Policy</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Cookie Policy</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Terms of Service</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Acceptable Use Policy</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Code of Conduct</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-md-5 offset-md-1 mb-3">
+          <form action="{% url 'subscribe' %}" method="POST">
+                {% csrf_token %}
+                <h5>Subscribe to our newsletter</h5>
+                <p>Monthly digest of what's new and exciting from us.</p>
+                <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+                  <label for="newsletter1" class="visually-hidden">Email address</label>
+                  <input id="newsletter1" name="newsletter1" type="email" class="form-control" placeholder="Email address" required>
+                  <button class="btn btn-primary btn-subscribe" data-subscribed-text="Subscribed">Subscribe</button>
+                </div>
+                <div>
+                {% if messages %}
+                {% for msg in messages %}
+                    {{ msg }}
+                {% endfor %}
+                {% endif %}
+                </div>
+          </form>
+        </div>
+      </div>
+  
+      <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+        <p>&copy; 2023 lynkly, Inc. All rights reserved.</p>
+        <ul class="list-unstyled d-flex">
+          <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
+          <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
+          <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+{% endblock %}
+
+{% block style %}
+   <style>
+      .container-box {
+          margin-bottom: 80px;
+      }
+      #accordion{
+        margin-bottom: 40px;
+      }
+      .carousel{
+        margin-bottom: 40px;
+      }
+     .carousel-inner{
+        height: 250px;
+     }
+    .carousel-caption{
+      color: #fff;
+      top: 50%;
+    }
+
+    .p-text {
+        font-size: 2em;
+    }
+   </style>
+{% endblock %}
+
+
+{% block script %} 
+   <script>
+    $(document).ready(function() {
+      $('.btn-subscribe').click(function() {
+        $(this).text($(this).data('subscribedText'));
+        setTimeout(function() {
+          $('.btn-subscribe').text('Subscribe');
+        }, 5000);
+      });
+    });
+
+
+   </script>
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"></script>
+
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block style %}
+  <style>
+      .btn-danger {
+        float: right;
+      }
+
+      .custom-shadow{
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.4); /* Removes bottom shadow */
+      }
+
+      .container-box {
+          margin-bottom: 80px;
+          margin-top: 20px;
+      }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container my-4">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h4>Your Urls Platform. <a href="{% url 'pricing' %}">Upgrade now</a></h4>
+        </div>
+    </div>
+
+    <div class="container container-box  shadow p-4">
+      <div class="row">
+          <div class="col-12 text-center py-2">
+              <h3>Shorten A Url</h3>
+          </div>
+          <div class="col-10 col-sm-10 col-md-6 mx-auto">
+
+              {% if messages %}
+              {% for msg in messages %}
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  {{ msg }}
+
+                  <button type="button" class="close" data-dismiss="alert" area-label="Close">
+                      <span area-hidden-true>&times;</span>
+                  </button>
+              </div>
+              {% endfor %}
+              {% endif %}
+
+              <form action="{% url 'generate' %}" method="POST">
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <input type="url" name="original" class="form-control" placeholder="Paste a long Url: http://super-long-link.com/shorten-it">
+                  </div>
+                  <div class="form-group">
+                      <div class="input-group-prepend">
+                          <div class="input-group-text">http://lynk.ly/</div>
+                          <input type="text" name="short" class="form-control" placeholder="Custom Url (6 chars)"
+                              maxlength="6" id="short">
+
+                      </div>
+                      <p id="shorthelp" class="form-text text-muted"><em>Leave It Blank To generate randomly</em></p>
+                  </div>
+                  <div class="form-group col-12 text-center py-2">
+                      <input type="submit" class="btn btn-primary px-4" value="Generate">
+                  </div>
+              </form>
+          </div>
+      </div>
+   </div>
+    {% for u in urls %}
+        <div class="row justify-content-between container custom-shadow p-1">
+            <div class="col-10 col-sm-10 col-md-12 mb-2 ">
+
+                <div style="overflow: hidden;" class="p-1">
+
+                    <p style="text-overflow: ellipsis;">Original : <a href="{{ u.original_url }}" target="_blank"
+                            class="card-link">{{ u.original_url }}</a>
+                    </p>
+
+                    <p>Shorten : <a href="http://localhost:8000/{{ u.short_query }}" target="_blank"
+                            class="card-link">http://localhost:8000/{{ u.short_query }}</a>
+                            <button class="btn btn-outline-secondary copy-button border-0" data-url="{{ u.short_query }}"><i class="bi bi-files"></i> Copy</button>
+                    </p>
+                    <div class="row justify-content-between">
+                        <div class="col-6 col-sm-6 ">
+                            <h3>{{ u.visits }} engagements</h3>
+                        </div>
+                        <div class="col-4">
+                            <form action="{% url 'deleteurl' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="delete" value="{{ u.short_query }}">
+                                <input type="submit" class="btn btn-danger" value="Delete">
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <br/>
+    {% endfor %}
+
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+    // Add click event listeners to all copy buttons
+    const copyButtons = document.querySelectorAll('.copy-button');
+    copyButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const urlToCopy = this.getAttribute('data-url');
+  
+        // Create a temporary input element to copy the URL to the clipboard
+        const tempInput = document.createElement('input');
+        tempInput.value = 'http://localhost:8000/'+urlToCopy;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+  
+        // Change the button text to "Copied"
+        this.innerHTML = '<i class="bi bi-check"></i> Copied';
+  
+        setTimeout(() => {
+          // Reset the button text after a delay (e.g., 2 seconds)
+          this.innerHTML = '<i class="bi bi-files"></i> Copy';
+        }, 2000); // Change the delay (in milliseconds) as needed
+      });
+    });
+  </script>
+  
+{% endblock %}
