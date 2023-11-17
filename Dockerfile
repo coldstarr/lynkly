@@ -1,21 +1,22 @@
-FROM python:3.10
-WORKDIR /app
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim
 
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# install system dependencies
-RUN apt-get update
+# Set the working directory to /app
+WORKDIR /app
 
-# install dependencies
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
 RUN pip install --upgrade pip
-COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
-COPY . /app/
+# Collect static files
+RUN python manage.py collectstatic --noinput
 
-# Run Celery worker and beat
-CMD ["celery", "-A", "lynkly.celery", "worker", "--loglevel=info", "--concurrency=4"]
-CMD ["celery", "-A", "lynkly.celery", "beat", "--loglevel=info"]
-
-# Start Gunicorn
-ENTRYPOINT ["gunicorn", "lynkly.wsgi"]
+# Run gunicorn
+CMD ["gunicorn", "lynkly.wsgi:application", "--bind", "0.0.0.0:8000"]

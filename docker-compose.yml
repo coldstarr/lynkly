@@ -1,9 +1,20 @@
-version: '3.9'
+version: '3'
 
 services:
+  web:
+    build: .
+    command: bash -c "gunicorn lynkly.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - celery
+
   celery:
     build: .
-    command: ["./wait-for-it.sh", "redis:6379", "--", "celery", "-A", "lynkly", "worker", "--pool=solo", "-l", "INFO"]
+    command: celery -A lynkly worker -l info
     volumes:
       - .:/app
     depends_on:
@@ -11,7 +22,7 @@ services:
 
   celery-beat:
     build: .
-    command: ["./wait-for-it.sh", "redis:6379", "--", "celery", "-A", "lynkly", "beat", "-l", "INFO"]
+    command: celery -A lynkly beat -l info
     volumes:
       - .:/app
     depends_on:
@@ -20,6 +31,4 @@ services:
 
   redis:
     image: "redis:alpine"
-    container_name: redis
-    ports:
-      - "6379:6379"
+
