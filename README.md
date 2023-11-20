@@ -7,6 +7,7 @@ Live Demo can be viewed at https://lynkly.onrender.com
 * Custom/Random URL
 * Service Plans
 * Contact Support
+* User authentication/authorization
 * Monthly News Letter 
 * Stripe integration
 
